@@ -1,0 +1,75 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Byte-compiled / Python internal cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments & Virtual Envs
+venv/
+.venv/
+env/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets
+.env
+.env.local
+*.env
+.streamlit/secrets.toml
+
+# IDEs & Code Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+#data
+data/Data/*
+*.csv
+*.json
+/data/raw/*
+/data/processed/*
+!/data/raw/.gitkeep
+!/data/processed/.gitkeep
+
+# Python build artifacts / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Caches (pytest, mypy, ruff, coverage)
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# uv cache (not the lockfile, uv.lock SHOULD be committed)
+.uv_cache/
+.uv/
+
+notebooks/xxxx.ipynb
