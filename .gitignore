@@ -51,6 +51,7 @@ data/Data/*
 /data/processed/*
 !/data/raw/.gitkeep
 !/data/processed/.gitkeep
+data/data.zip
 
 # Python build artifacts / packaging
 dist/
