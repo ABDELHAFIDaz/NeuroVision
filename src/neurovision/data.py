@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import random
 from collections import Counter, defaultdict
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +16,7 @@ VALID_EXTENSIONS = {".jpeg", ".jpg", ".bmp", ".png"}
 
 
 def scan_dataset(raw_dir: str | Path) -> dict:
-    
+
     raw_dir = Path(raw_dir)
     if not raw_dir.is_dir():
         raise FileNotFoundError(f"Dataset folder not found: {raw_dir}")
@@ -66,3 +68,35 @@ def find_duplicates(files: list[tuple[Path, str]]) -> list[list[tuple[Path, str]
 
 def class_counts(files: list[tuple[Path, str]]) -> Counter:
     return Counter(label for _, label in files)
+
+
+def remove_duplicates(files: list[tuple[Path, str]]) -> list[tuple[Path, str]]:
+    drop = set()
+    for group in find_duplicates(files):
+        if len({label for _, label in group}) > 1:
+            drop.update(p for p, _ in group)
+        else:
+            drop.update(p for p, _ in group[1:])
+    return [(p, label) for p, label in files if p not in drop]
+
+
+def load_dataset(files: list[tuple[Path, str]], size: tuple[int, int] = (224, 224), seed: int = 42):
+    items = list(files)
+    random.Random(seed).shuffle(items)
+
+    images, labels, paths = [], [], []
+    for path, label in items:
+        try:
+            img = cv2.imread(str(path))
+            if img is None:
+                raise ValueError("unreadable image")
+            img = cv2.resize(img, size, interpolation=cv2.INTER_AREA)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        except Exception as exc:
+            logger.warning("Skipping %s: %s", path, exc)
+            continue
+        images.append(img)
+        labels.append(label)
+        paths.append(str(path))
+
+    return np.stack(images), np.array(labels), np.array(paths)

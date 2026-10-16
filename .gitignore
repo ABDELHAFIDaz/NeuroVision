@@ -72,4 +72,4 @@ htmlcov/
 .uv_cache/
 .uv/
 
-notebooks/xxxx.ipynb
+notebooks/testing_colab.ipynb
