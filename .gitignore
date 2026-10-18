@@ -52,6 +52,7 @@ data/Data/*
 !/data/raw/.gitkeep
 !/data/processed/.gitkeep
 data/data.zip
+*.zip
 
 # Python build artifacts / packaging
 dist/
@@ -75,3 +76,5 @@ htmlcov/
 
 notebooks/testing_colab.ipynb
 live_coding.ipynb
+
+models/backup/
