@@ -74,3 +74,4 @@ htmlcov/
 .uv/
 
 notebooks/testing_colab.ipynb
+live_coding.ipynb
