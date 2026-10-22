@@ -100,3 +100,8 @@ def load_dataset(files: list[tuple[Path, str]], size: tuple[int, int] = (224, 22
         paths.append(str(path))
 
     return np.stack(images), np.array(labels), np.array(paths)
+
+
+def split_fingerprint(paths, raw_dir) -> str:
+    relative = sorted(str(Path(p).relative_to(raw_dir)) for p in paths)
+    return hashlib.md5("\n".join(relative).encode()).hexdigest()[:12]
