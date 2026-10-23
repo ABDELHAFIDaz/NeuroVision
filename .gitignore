@@ -82,3 +82,6 @@ models/backup/
 models/backup_*/
 
 
+
+# Trained Keras models
+*.keras
