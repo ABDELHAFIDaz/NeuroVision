@@ -76,7 +76,7 @@ htmlcov/
 
 notebooks/testing_colab.ipynb
 live_coding.ipynb
-vst.ipynb
+vast_setup.ipynb
 
 models/backup/
 models/backup_*/
