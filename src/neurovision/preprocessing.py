@@ -14,11 +14,14 @@ def encode_labels(labels):
 
 
 def make_dataset(images, labels, batch_size=32, training=False):
-    ds = tf.data.Dataset.from_tensor_slices((images, encode_labels(labels)))
-    ds = ds.cache()
-    if training:
-        ds = ds.shuffle(len(images), seed=42)
-    return ds.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+   
+    with tf.device("/CPU:0"):
+        ds = tf.data.Dataset.from_tensor_slices((images, encode_labels(labels)))
+        ds = ds.cache()
+        if training:
+            ds = ds.shuffle(len(images), seed=42)
+        ds = ds.batch(batch_size).prefetch(tf.data.AUTOTUNE)
+    return ds
 
 
 def prepare_data(raw_dir, size=(224, 224), seed=42):
