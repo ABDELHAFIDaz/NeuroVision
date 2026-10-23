@@ -46,7 +46,7 @@ Thumbs.db
 #data
 data/Data/*
 *.csv
-*.json
+# *.json
 /data/raw/*
 /data/processed/*
 !/data/raw/.gitkeep
