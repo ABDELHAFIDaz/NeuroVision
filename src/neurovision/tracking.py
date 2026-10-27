@@ -1,4 +1,10 @@
+"""MLflow helpers shared by the notebooks and the Streamlit app.
 
+Runs are stored in <repo>/mlflow.db (SQLite) and artifacts in <repo>/mlartifacts,
+unless the environment variable MLFLOW_TRACKING_URI says otherwise. (Recent
+MLflow versions no longer accept the old ./mlruns file store.) On the Vast.ai VM
+these live on the VM disk, so download them before destroying the instance.
+"""
 import os
 from pathlib import Path
 
@@ -22,6 +28,7 @@ def setup_mlflow(experiment=EXPERIMENT):
 
 
 def start_run(run_name, tags=None):
+    """Start a run, closing a run left open by an interrupted notebook."""
     if mlflow.active_run():
         mlflow.end_run()
     run = mlflow.start_run(run_name=run_name)
@@ -31,6 +38,7 @@ def start_run(run_name, tags=None):
 
 
 class MlflowEpochLogger(tf.keras.callbacks.Callback):
+    """Keras callback: sends every epoch's metrics to the active MLflow run."""
 
     def on_epoch_end(self, epoch, logs=None):
         if mlflow.active_run() and logs:
@@ -54,7 +62,10 @@ def log_training_summary(history, duration_s, model_path=None):
 
 
 def log_evaluation(tag, model_path, test_loss, test_acc, report, files=()):
-   
+    """Log test metrics, per-class scores, figures and the evaluated model.
+
+    `report` is classification_report(..., output_dict=True).
+    """
     mlflow.log_param("model_tag", tag)
     mlflow.log_metrics(
         {

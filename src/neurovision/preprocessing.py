@@ -14,7 +14,8 @@ def encode_labels(labels):
 
 
 def make_dataset(images, labels, batch_size=32, training=False):
-   
+    # Built on the CPU: otherwise TensorFlow copies the whole image array into
+    # GPU memory first (about 700 MB for the training set) and can run out of it.
     with tf.device("/CPU:0"):
         ds = tf.data.Dataset.from_tensor_slices((images, encode_labels(labels)))
         ds = ds.cache()

@@ -85,3 +85,6 @@ models/backup_*/
 
 # Trained Keras models
 *.keras
+
+
+ntbooks/*
