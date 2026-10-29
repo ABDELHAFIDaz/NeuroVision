@@ -1,0 +1,4 @@
+uv add mlflow
+uv run python src/neurovision/fix_mlflow_paths.py
+uv run mlflow ui --backend-store-uri sqlite:///mlflow.db
+uv run streamlit run app/streamlit_app.py
